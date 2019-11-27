@@ -97,3 +97,55 @@ Try this on your own:
 - Get those new field from the JSON object in your JS and assign it an element in the DOM. 
 - Generate serverside data dynamically and return that by attaching it to the dictionary in the `/data` route. 
 
+## Receiveing at a Route
+
+```Python
+# This route receives data via POST at /send-data
+@app.route("/send-data", methods=["POST"])
+def sendData():
+  d = request.get_json()
+  print(d) 
+  return jsonify(d)
+```
+
+The route above receives data via the POST method. 
+
+Converts that data from JSON to a Python Dict (d). 
+
+Then converts the dict to JSON and sends this back as a reply. 
+
+In short this route receives JSON and then sends that same JSON back. This is just an example to show the process. You would apply some code to shape a custom response before the return statement. 
+
+## Sending JSON Data with Fetch
+
+```JS
+const str = sendInput.value
+
+const options = {
+  method: 'post',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({ data: str })
+}
+
+// Query the /send-data route with fetch
+fetch('/send-data', options)
+  .then(function(res){
+    return res.json()
+  }).then(function(json){
+    // Handle the response and display the data received
+    sendResults.innerHTML = json.data
+  }).catch(function(err) {
+    console.log(err.message)
+  })
+```
+
+The first get a string to send to the server. This comes from the input in the form in the example. 
+
+Next define some options to send the data using POST as JSON. We need to create an options object with a method: POST, headers: defines the type of data we're sending, and body: this is content we are sending. 
+
+Use fetch to send and receive data. This fucntion expects a JSON response with a data property. Which it displays a DOM element. 
+
+
+

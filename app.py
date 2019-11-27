@@ -23,7 +23,7 @@ def data():
 @app.route("/send-data", methods=["POST"])
 def sendData():
   d = request.get_json()
-  print(d)
+  print(d['data'])
   return jsonify(d)
 
 
