@@ -4,7 +4,11 @@ This is a short tutorial that will show you how to serve static files with Pytho
 
 ## Install Python Flask
 
+`pip install Flask`
 
+Run your server with: 
+
+`flask run`
 
 ## Create Directory structure
 
@@ -92,3 +96,4 @@ Try this on your own:
 - Add some new fields to the dictionary in app.py
 - Get those new field from the JSON object in your JS and assign it an element in the DOM. 
 - Generate serverside data dynamically and return that by attaching it to the dictionary in the `/data` route. 
+
