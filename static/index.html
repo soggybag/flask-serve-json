@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+  </head>
+  <body>
+    <div>
+      <h1><!-- Name --></h1>
+      <h2><!-- Rank --></h2>
+    </div>
+
+    <script>
+      // Loads data from the route /data (see app.py)
+      fetch('/data').then(function(res) {
+        return res.json()
+      }).then(function(json) {
+        const h1 = document.querySelector('h1')
+        const h2 = document.querySelector('h2')
+        // Use the JSON data to populate these elements
+        h1.innerHTML = json.name 
+        h2.innerHTML = json.rank
+      }).catch(function(err) {
+        console.log(err.message)
+      })
+    </script>
+  </body>
+</html>
