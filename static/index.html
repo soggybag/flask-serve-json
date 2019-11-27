@@ -5,12 +5,26 @@
   </head>
   <body>
     <div>
+      <small>Get Fetch JSON</small>
       <h1><!-- Name --></h1>
       <h2><!-- Rank --></h2>
     </div>
 
+    <div>
+      <small>Send form data</small>
+      <form id="send-form">
+        <input id="send-input" type="text" placeholder="type anything">
+        <button>Submit</button>
+      </form>
+      <p id="send-form-results"> - </p>
+    </div>
+
     <script>
+      // ----------------------------------------------
       // Loads data from the route /data (see app.py)
+
+      // This example requests JSON from the route /data
+
       fetch('/data').then(function(res) {
         return res.json()
       }).then(function(json) {
@@ -21,6 +35,48 @@
         h2.innerHTML = json.rank
       }).catch(function(err) {
         console.log(err.message)
+      })
+
+
+      // ----------------------------------------------
+      // Send data from a form to the route /send-data (see app.py)
+
+      // This example takes the input in the form and sends this to 
+      // the server (app.py) /send-data. This route receives the 
+      // data and sends it back. 
+
+      // Reference some DOM elements to get form input and display the result
+      const sendForm = document.getElementById('send-form')
+      const sendInput = document.getElementById('send-input')
+      const sendResults = document.getElementById('send-form-results')
+
+      // Handle form submit
+      sendForm.addEventListener('submit', function(e) {
+        e.preventDefault() // Prevent the default behavior
+        const str = sendInput.value // get the input string
+
+        // Set up some options for fetch
+        // Method is POST
+        // Headers to JSON
+        // Attach convert our JS Object to JSON and add it to the body of the message
+        const options = {
+          method: 'post',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ data: str })
+        }
+
+        // Query the /send-data route with fetch
+        fetch('/send-data', options)
+          .then(function(res){
+            return res.json()
+          }).then(function(json){
+            // Handle the response and display the data received
+            sendResults.innerHTML = json.data
+          }).catch(function(err) {
+            console.log(err.message)
+          })
       })
     </script>
   </body>

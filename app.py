@@ -8,7 +8,7 @@ app = Flask(__name__, static_url_path='')
 def index():
   return app.send_static_file('index.html')
 
-# This route serves the dictionary d at the route /date
+# This route serves the dictionary d at the route /data
 @app.route("/data")
 def data():
   # define some data
@@ -17,7 +17,16 @@ def data():
     "rank": "bar"
   }
   return jsonify(d) # convert your data to JSON and return 
-  
+
+
+# This route receives data via POST at /send-data
+@app.route("/send-data", methods=["POST"])
+def sendData():
+  d = request.get_json()
+  print(d)
+  return jsonify(d)
+
+
 
 if __name__ == "__main__":
   # app.config["TEMPLATES_AUTO_RELOAD"] = True
