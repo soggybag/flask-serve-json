@@ -147,5 +147,63 @@ Next define some options to send the data using POST as JSON. We need to create 
 
 Use fetch to send and receive data. This fucntion expects a JSON response with a data property. Which it displays a DOM element. 
 
+## Using Query Vars in a request
 
+Query vars are sent as part of the URL string. They follow the URL beginning with a `?`.
+
+For example: 
+
+`https://google.com?search=Cats`
+
+The query above would generate a query var: `search` with a value of `'Cats'`. 
+
+```python
+# This route receives data via GET at /send-data
+@app.route("/send-query", methods=["GET"])
+def sendQuery():
+  index = int(request.args.get('index'))
+  colors = [
+    { 'red': '#ff0000'},
+    { 'green': '#00ff00' },
+    { 'blue': '#0000ff' }
+  ]
+  print(colors[index])
+  return jsonify(colors[index])
+```
+
+The route uses the GET method. 
+
+It gets the query var: index with `request.args.get('index')` converts to an int then assigns this to `index`.
+
+There is some dummy data here that is an array of dictionaries. We will send one of these back as JSON. 
+
+Print the color to the terminal for testing. 
+
+Last convert one of the dictionaries to JSON and return that to the client. 
+
+## Fetch with a Query Var
+
+```JS
+// Get a random color
+randomColor.addEventListener('click', function(e) {
+  const n = Math.floor(Math.random() * 3)
+  const url = `/send-query?index=${n}`
+  fetch(url).then(function(res) {
+    return res.json()
+  }).then(function(json) {
+    console.log(json)
+    showColor.innerHTML = json.color
+  }).catch(function(err) {
+    console.log(err.message)
+  })
+})
+```
+
+This function creates an event listener listening for a click event. 
+
+Next we'll generate a random number between 0 and 2. 
+
+Then make as URL with the random number. The number ids passed as a query var `index`.
+
+Use fetch to make a request to the url. 
 

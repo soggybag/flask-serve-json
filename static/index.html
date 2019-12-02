@@ -19,6 +19,9 @@
       <p id="send-form-results"> - </p>
     </div>
 
+    <button id="random-color">Random Color</button>
+    <small id="show-color"></small>
+
     <script>
       // ----------------------------------------------
       // Loads data from the route /data (see app.py)
@@ -49,6 +52,8 @@
       const sendForm = document.getElementById('send-form')
       const sendInput = document.getElementById('send-input')
       const sendResults = document.getElementById('send-form-results')
+      const randomColor = document.getElementById('random-color')
+      const showColor = document.getElementById('show-color')
 
       // Handle form submit
       sendForm.addEventListener('submit', function(e) {
@@ -77,6 +82,20 @@
           }).catch(function(err) {
             console.log(err.message)
           })
+      })
+
+      // Get a random color
+      randomColor.addEventListener('click', function(e) {
+        const n = Math.floor(Math.random() * 3)
+        const url = `/send-query?index=${n}`
+        fetch(url).then(function(res) {
+          return res.json()
+        }).then(function(json) {
+          console.log(json)
+          showColor.innerHTML = json.color
+        }).catch(function(err) {
+          console.log(err.message)
+        })
       })
     </script>
   </body>

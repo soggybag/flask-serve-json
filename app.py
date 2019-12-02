@@ -27,6 +27,18 @@ def sendData():
   return jsonify(d)
 
 
+# This route receives data via GET at /send-data
+@app.route("/send-query", methods=["GET"])
+def sendQuery():
+  index = int(request.args.get('index'))
+  colors = [
+    { 'color': '#ff0000'},
+    { 'color': '#00ff00' },
+    { 'color': '#0000ff' }
+  ]
+  print(colors[index])
+  return jsonify(colors[index])
+
 
 if __name__ == "__main__":
   # app.config["TEMPLATES_AUTO_RELOAD"] = True
